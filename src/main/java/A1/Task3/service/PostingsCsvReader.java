@@ -26,18 +26,18 @@ public class PostingsCsvReader {
 
     private static List<Posting> readPostsFromCSV(String fileName) {
         List<Posting> postingList = new ArrayList<>();
+
         Path pathToFile = Paths.get(fileName);
-        // create an instance of BufferedReader
-        // using try with resource, Java 7 feature to close resources
         try (BufferedReader br = Files.newBufferedReader(pathToFile, StandardCharsets.UTF_8)) {
-            // read the first line from the text file
             String line = br.readLine();
             line = br.readLine();
-            // loop until all lines are read
             while (line != null) {
                 String[] attributes = line.split(";");
                 if (attributes.length > 1){
                     Posting posting = createPosting(attributes);
+// ШАГ №2 "Прочитать файл postings.csv с локальной файловой системы (строки со значениями в поле Mat. Doc.)"
+// закомментировать строку 37 и раскомментировать строку 40
+//                   Posting posting = createPostingWithMatDoc(attributes);
                     postingList.add(posting);
                 }
                 line = br.readLine();
@@ -52,11 +52,17 @@ public class PostingsCsvReader {
     private static Posting createPosting(String[] metadata) throws ParseException {
         String matDoc = metadata[0];
         String pstngDateString = metadata[3].replaceAll(" ", "").replaceAll("\t", "");
-//        System.out.println(pstngDateString);
         Date pstngDate=new SimpleDateFormat("dd.MM.yyyy").parse(pstngDateString);
-//        System.out.println(pstngDate);
-        String username = metadata[9].replaceAll(" ", "").replaceAll("_", "").replaceAll("\t", "");
+        String username = metadata[9].replaceAll("[^\\da-zA-Zа-яёА-ЯЁ ]", "");
         return new Posting(matDoc, username, pstngDate);
     }
+
+// для ШАГа №2 "Прочитать файл postings.csv с локальной файловой системы (строки со значениями в поле Mat. Doc.)"
+    private static Posting createPostingWithMatDoc(String[] metadata) throws ParseException {
+        String matDoc = metadata[0];
+        return new Posting(matDoc);
+    }
+
+
 }
 

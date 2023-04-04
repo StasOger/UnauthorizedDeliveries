@@ -1,59 +1,38 @@
 package A1.Task3;
 
-import A1.Task3.model.Posting;
-import A1.Task3.model.User;
-import A1.Task3.service.ApplicationService;
-import A1.Task3.service.LoginsCsvReader;
-import A1.Task3.service.PostingsCsvReader;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 @SpringBootApplication
 public class Task3Application {
 
-//	private static final String url = "jdbc:mysql://localhost:3306/userdb?useTimezone=true&serverTimezone=UTC";
-//	private static final String user = "root";
-//	private static final String password = "root";
-//
-//	private static Connection con;
-//	private static Statement stmt;
-//	private static ResultSet rs;
-
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args){
 		SpringApplication.run(Task3Application.class, args);
-
-//		String pstngDateString = "21.01.2000";
-//		Date pstngDate=new SimpleDateFormat("dd.MM.yyyy").parse(pstngDateString);
-//
-//		System.out.println(pstngDate);
-
-//		String query = "select * from logins";
-//
-//		try {
-//			con = DriverManager.getConnection(url, user, password);
-//			stmt = con.createStatement();
-//			rs = stmt.executeQuery(query);
-//			while (rs.next()) {
-//				int id = rs.getInt(1);
-//				String appAccountName = rs.getString(2);
-//				String application = rs.getString(3);
-//				System.out.println("user : " + id + " " + appAccountName + " " + application);
-//			}
-//
-//		} catch (SQLException sqlEx) {
-//			sqlEx.printStackTrace();
-//		} finally {
-//
-//			try { con.close(); } catch(SQLException se) { }
-//			try { stmt.close(); } catch(SQLException se) { }
-//			try { rs.close(); } catch(SQLException se) {  }
-//		}
 	}
 }
+
+//Задание 3 "Неавторизованные поставки"
+//	Реализуйте любым из доступных способов следующие шаги:
+//	1. Прочитать файл logins.csv с локальной файловой системы
+//	2. Прочитать файл postings.csv с локальной файловой системы (строки со значениями в поле Mat. Doc.)
+//	3. Добавить булевое поле "авторизованная поставка" в данные из postings.csv, которое будет указывать, что User Name (postings.csv) находится в списке AppAccountName (logins.csv) и IsActive
+//	4. Cохранить в SQL СУБД данные файла logins.csv
+//	5. Сохранить в SQL СУБД данные файла postings.csv (с дополнительным полем)
+//	6. Отдавать по GET (REST API) за период (день, месяц, квартал, год) данные из базы, загруженные из postings.csv (с возможностью запроса с фильтром по полю "авторизованная поставка")
+//
+//	Описание postings.cvs
+//
+//	Mat.Doc - номер поставки
+//	Item - порядковый номер товара в поставке (в одной поставке несколько товарных позиций)
+//	Doc. Date - дата договора
+//	Pstng. Date - дата поставки
+//	Material Description - описание материала
+//	Quantity - количество
+//	BUn - единица измерения
+//	Amount LC - стоимость в валюте (Crcy)
+//	Crcy - валюта
+//	User Name - пользователь, который провел поставку
+//
+//	Связанные таблицы, которые не несут смысловой нагрузки (поставка и товар - несут) можно не усложнять и наделять только минимально необходимыми для парсинга этого файла атрибутами.
+//	Аналогично с таблицами-справочниками, можно заполнить по принципу минимально необходимого.
+//	API для вспомогательных таблиц можно не реализовывать.

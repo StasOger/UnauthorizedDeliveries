@@ -1,12 +1,10 @@
 package A1.Task3.service;
 
-import A1.Task3.Task3Application;
 import A1.Task3.model.Posting;
 import A1.Task3.model.User;
 import A1.Task3.repository.LoginsRepository;
 import A1.Task3.repository.PostingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,18 +22,15 @@ public class ApplicationService {
 
     public void initDatabase(){
         List<User> userList = loginsCsvReader.getAllUser();
-        for (User u: userList){
-            System.out.println(u);
-//            loginsRepository.save(u);
-        }
+// ШАГ	4. Cохранить в SQL СУБД данные файла logins.csv
         loginsRepository.saveAll(userList);
 
         List<Posting> postingList = postingsCsvReader.getAllPosting();
         for (Posting p: postingList){
+// ШАГ  3. Добавить булевое поле "авторизованная поставка" в данные из postings.csv, которое будет указывать, что User Name (postings.csv) находится в списке AppAccountName (logins.csv) и IsActive
             p.setAutowiredPost(userList.stream().anyMatch(user -> user.getAppAccountName().equals(p.getName()) && user.getIsActive()));
-            System.out.println(p);
-//            postingsRepository.save(p);
         }
+// ШАГ	5. Сохранить в SQL СУБД данные файла postings.csv (с дополнительным полем)
         postingsRepository.saveAll(postingList);
     }
 

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginsCsvReader {
+
+// ШАГ 1. Прочитать файл logins.csv с локальной файловой системы
     private static final String ADDRESS_FILE = "src/main/resources/logins.csv";
 
     public List<User> getAllUser (){
@@ -22,10 +24,7 @@ public class LoginsCsvReader {
     private static List<User> readPostsFromCSV(String fileName) {
         List<User> userList = new ArrayList<>();
         Path pathToFile = Paths.get(fileName);
-        // create an instance of BufferedReader
-        // using try with resource, Java 7 feature to close resources
         try (BufferedReader br = Files.newBufferedReader(pathToFile, StandardCharsets.UTF_8)) {
-            // read the first line from the text file
             String line = br.readLine();
             line = br.readLine();
             while (line != null) {
@@ -43,7 +42,7 @@ public class LoginsCsvReader {
 
     private static User createUser(String[] metadata) {
         String application = metadata[0];
-        String appAccountName = metadata[1].replaceAll(" ", "").replaceAll("_", "");
+        String appAccountName = metadata[1].replaceAll("[^\\da-zA-Zа-яёА-ЯЁ ]", "");
         boolean isActive = Boolean.parseBoolean(metadata[2]);
         String jobTitle = metadata[3];
         String department = metadata[4];

@@ -42,6 +42,10 @@ public class Posting {
         this.autowiredPost = autowiredPost;
     }
 
+    public Posting(String matDoc) {
+        this.matDoc = matDoc;
+    }
+
     public Date getPstngDate() {
         return pstngDate;
     }

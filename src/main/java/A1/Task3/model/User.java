@@ -1,7 +1,5 @@
 package A1.Task3.model;
 
-
-
 import javax.persistence.*;
 
 @Entity
